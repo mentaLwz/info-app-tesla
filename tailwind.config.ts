@@ -13,7 +13,13 @@ const config: Config = {
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
-    },
+      maxWidth: {
+        '8xl': '90rem', // 自定义的最大宽度类
+        '9xl': '100rem', // 另一个自定义的最大宽度类
+        '10xl': '110rem', // 另一个自定义的最大宽度类
+        '11xl': '120rem', // 另一个自定义的最大宽度类
+      }
+    }
   },
   plugins: [],
 };
