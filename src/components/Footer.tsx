@@ -8,6 +8,8 @@ type Props = {
 
 export default function Footer({ page, prevPage, nextPage }: Props) {
 
+    console.log("lwzdebug", prevPage, nextPage)
+
     if (!prevPage && !nextPage) return
 
     const pageNums: number[] = []
@@ -17,10 +19,16 @@ export default function Footer({ page, prevPage, nextPage }: Props) {
         }
     }
 
+    if (!prevPage) {
+        for (let i = 1; i <= 5 ; i++) {
+            pageNums.push(i)
+        }
+    }
+
+
     const nextPageArea = nextPage
         ? (
-            <Link href={`/results/${nextPage}`} className={!prevPage ? "mx-auto" : ""} >
-                {!prevPage ? "more" : null} &gt;&gt;&gt;
+            <Link href={`/results/${nextPage}`} className={!prevPage ? "mx-auto" : ""} > &gt;&gt;&gt;
             </Link>
         )
         : null
@@ -42,10 +50,24 @@ export default function Footer({ page, prevPage, nextPage }: Props) {
                 ))}
             </>
         )
-        : null
+        : (
+            <>
+            {pageNums.map((num, i) => (
+                page && num === page
+                    ? <span key={i}>{num}</span>
+                    : (
+                        <Link key={i} href={`/results/${num}`} className="underline"
+                        >&nbsp;{num}&nbsp;</Link>
+                    )
+                ))}
+            </>
+        )
+
+        console.log(prevPageArea)
+        console.log(nextPageArea)
 
     return (
-        <footer className="flex flex-row justify-between items-center px-2 py-4 font-bold w-60 mx-auto">
+        <footer className="flex flex-row justify-around items-center px-2 py-4 font-bold w-60 mx-auto">
             {prevPageArea}
             {nextPageArea}
         </footer>

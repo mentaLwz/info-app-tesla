@@ -2,9 +2,9 @@
 export default function getPrevNextPages(curPage : number, limit: number, totalCount:number) {
   const totalPages = Math.ceil(totalCount / limit)
 
-  if (curPage === 0 && curPage + 3 <= totalPages) {
+  if (curPage <= 5 && curPage + 3 <= totalPages) {
     const prevPage = null
-    const nextPage = curPage +3
+    const nextPage = 5 + 1
     return { prevPage, nextPage }
   }
 
