@@ -4,7 +4,6 @@ import Tesla from '@/models/Item';
 
 
 export async function GET(request: Request) {
-  console.log("hello");
 
   // 解析查询参数
   const { searchParams } = new URL(request.url);

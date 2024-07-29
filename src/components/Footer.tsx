@@ -8,7 +8,7 @@ type Props = {
 
 export default function Footer({ page, prevPage, nextPage }: Props) {
 
-    console.log("lwzdebug", prevPage, nextPage)
+    // console.log("lwzdebug", prevPage, nextPage)
 
     if (!prevPage && !nextPage) return
 
@@ -56,15 +56,15 @@ export default function Footer({ page, prevPage, nextPage }: Props) {
                 page && num === page
                     ? <span key={i}>{num}</span>
                     : (
-                        <Link key={i} href={`/results/${num}`} className="underline"
-                        >&nbsp;{num}&nbsp;</Link>
+                        <Link key={i} href={`/results/${num}`} className="underline mx-auto"
+                        >{num}</Link>
                     )
                 ))}
             </>
         )
 
-        console.log(prevPageArea)
-        console.log(nextPageArea)
+        // console.log(prevPageArea)
+        // console.log(nextPageArea)
 
     return (
         <footer className="flex flex-row justify-around items-center px-2 py-4 font-bold w-60 mx-auto">

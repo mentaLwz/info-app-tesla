@@ -23,7 +23,14 @@ export default async function Gallery({ page }: Props) {
 
   return (
     <>
-      <section className="m-4 grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
+      <section className="
+      m-4 
+      grid sm:grid-cols-1 
+      md:grid-cols-2 
+      lg:grid-cols-3 
+      xl:grid-cols-5 
+      gap-5"
+      >
         {
           newsBlocksResp.items.map(block => (
             <NewsContainer  

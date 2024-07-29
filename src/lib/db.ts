@@ -1,4 +1,5 @@
 import mongoose, { Mongoose } from "mongoose";
+import env from "./env";
 
 declare global {
   // 定义全局变量的类型
@@ -17,10 +18,10 @@ global.mongoose = global.mongoose || {
 export async function dbConnect(): Promise<Mongoose> {
   try {
     if (global.mongoose && global.mongoose.conn) {
-      console.log("Connected from previous");
+      // console.log("Connected from previous");
       return global.mongoose.conn;
     } else {
-      const conString = process.env.MONGO_URL;
+      const conString = env.MONGO_URL;
 
       if (!conString) {
         throw new Error("MONGO_URL is not defined in environment variables");
@@ -35,7 +36,7 @@ export async function dbConnect(): Promise<Mongoose> {
         promise,
       };
 
-      console.log("Newly connected");
+      // console.log("Newly connected");
       return await promise;
     }
   } catch (error) {

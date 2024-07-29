@@ -4,21 +4,23 @@ import env from "./env";
 
 
 
+
 export default async function fetchNewsBlockList(url:string):
 Promise<NewsBlockResp | undefined> {
 
-  console.log(url)
+  // console.log(url)
   url = "http://localhost:3000/"+url
   try {
     const res = await fetch(url, {
       headers: {
         Authorization: env.API_KEY
-      }
+      },
+      next: { revalidate: 60 },
     })
     if (!res.ok) throw Error("Fetch news block error!\n")
     
     const newsBlockList: NewsBlockResp = await res.json()
-    console.log(newsBlockList)
+    // console.log(newsBlockList)
     const parseData = NewsBlockRespScheme.parse(newsBlockList)
 
     if (parseData.items.length === 0 ) return undefined

@@ -18,6 +18,6 @@ export function generateMetadata({ params: { myParams } }: Props) {
 export default function SearchResults({ params: { myParams } }: Props) {
 
     const page = myParams?.[1] ?? "1"
-    console.log("lwzdebug page", page)
+    // console.log("lwzdebug page", page)
     return <Gallery page={parseInt(page)} />
 }
