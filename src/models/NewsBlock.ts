@@ -16,10 +16,17 @@ const longValidator = z.object({
   unsigned: z.boolean(),
 });
 
+const dateValidator = z.union([
+  z.string().refine((val) => !isNaN(Date.parse(val)), {
+    message: "Invalid date string",
+  }),
+  z.date(),
+]);
+
 const ItemSchema = z.object({
   id: longValidator,
   title: z.string(),
-  date: z.string(),
+  date: dateValidator,
   link: z.string().nullable().optional(),
   source: z.string().nullable().optional(),
   score: z.number().nullable().optional(),
