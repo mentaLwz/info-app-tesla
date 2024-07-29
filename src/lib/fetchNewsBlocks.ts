@@ -11,7 +11,7 @@ Promise<NewsBlockResp | undefined> {
   // console.log(url)
   // url = "http://localhost:3000/"+url
   const isServer = typeof window === 'undefined';
-  const baseUrl = isServer ? process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000' : '';
+  const baseUrl = isServer ? process.env.NEXT_PUBLIC_VERCEL_URL || 'http://localhost:3000' : '';
   const url = `${baseUrl}/api?page=${page}`;
 
 
