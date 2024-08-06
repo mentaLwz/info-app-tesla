@@ -50,9 +50,9 @@ const formattedDate = date.toLocaleString('en-US', options);
 
   const gradientColor = getGradientColor(score);
   return (
-    <div className="h-32 bg-cyan-100 shadow-lg rounded-xl
+    <div className="h-32 shadow-lg rounded-xl
   relative overflow-hidden group mx-2 pl-3 pt-3 pr-2 font-mono font-bold
-  hover:shadow-2xl transform hover:scale-150 hover:z-10 hover:bg-red-300 hover:text-black transition-all duration-500 ease-in-out " 
+  hover:shadow-2xl transform hover:scale-150 hover:z-10 hover:bg-red-300 hover:text-black hover:h-36 transition-all duration-500 ease-in-out " 
   style={{
     background: `linear-gradient(to right, ${gradientColor}, ${gradientColor})`,
   }}>

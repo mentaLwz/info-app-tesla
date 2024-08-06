@@ -20,7 +20,7 @@ async function GalleryContent({ page }: Props) {
 
   return (
     <>
-      <section className="m-4 grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-5">
+      <section className="m-12 grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
         {newsBlocksResp.items.map(block => (
           <NewsContainer  
             key={block.id.toString()}

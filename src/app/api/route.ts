@@ -8,7 +8,7 @@ export async function GET(request: Request) {
   // 解析查询参数
   const { searchParams } = new URL(request.url);
   const page = parseInt(searchParams.get('page') || '1', 10);
-  const limit = parseInt(searchParams.get('limit') || '10', 30);
+  const limit = parseInt(searchParams.get('limit') || '10', 20);
 
   // 连接数据库
   await dbConnect();

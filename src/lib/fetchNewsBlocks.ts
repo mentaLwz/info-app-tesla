@@ -59,7 +59,7 @@ export default async function fetchNewsBlockList(page:number):
 Promise<NewsBlockResp | undefined> {
 
   try {
-    const res = await getData(page, 35)
+    const res = await getData(page, 20)
     console.log(res)
     const newsBlockList: NewsBlockResp = NewsBlockRespScheme.parse(res)
     // console.log(newsBlockList)
