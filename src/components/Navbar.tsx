@@ -1,4 +1,5 @@
 import Link from "next/link";
+import HeatMapButton from "./HeatMapButton";
 
 export default function Navbar() {
   return (
@@ -9,6 +10,7 @@ export default function Navbar() {
             
         </h1>
         <h1 className="text-2xl">Help?</h1>
+        <HeatMapButton />
     </nav>
 </header>
   )

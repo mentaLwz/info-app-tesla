@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@uiw/react-heat-map": "^2.2.2",
     "envalid": "^8.0.0",
     "mongoose": "^8.5.1",
     "mongoose-long": "^0.8.0",
