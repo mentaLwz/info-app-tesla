@@ -1,14 +1,15 @@
 'use client';
 
-import { useState } from 'react';
-import HeatMapView from './HeatMap';
+import React, { useState, useEffect } from 'react';
+import HeatMapOverlay from './HeatMapOverlay';
 
-export default function HeatMapButton() {
+const HeatMapButton: React.FC = () => {
   const [showHeatMap, setShowHeatMap] = useState(false);
   const [heatMapData, setHeatMapData] = useState<any[]>([]);
 
-  const handleMouseEnter = async () => {
-    if (heatMapData.length === 0) {
+  useEffect(() => {
+    // Fetch heat map data when component mounts
+    const fetchData = async () => {
       try {
         const response = await fetch('/api/heatmap');
         if (!response.ok) throw new Error('Failed to fetch heat map data');
@@ -17,18 +18,27 @@ export default function HeatMapButton() {
       } catch (error) {
         console.error("Error fetching heat map data:", error);
       }
-    }
-    setShowHeatMap(true);
-  };
+    };
+
+    fetchData();
+  }, []);
 
   return (
-    <div onMouseEnter={handleMouseEnter} onMouseLeave={() => setShowHeatMap(false)}>
-      <button>HeatMap</button>
+    <>
+      <button
+        onClick={() => setShowHeatMap(true)}
+        className="px-4 py-2 bg-lime-400 text-white rounded"
+      >
+        HeatMap
+      </button>
       {showHeatMap && (
-        <div style={{ position: 'absolute', zIndex: 1000 }}>
-          <HeatMapView value={heatMapData} />
-        </div>
+        <HeatMapOverlay 
+          data={heatMapData} 
+          onClose={() => setShowHeatMap(false)} 
+        />
       )}
-    </div>
+    </>
   );
-}
+};
+
+export default HeatMapButton;

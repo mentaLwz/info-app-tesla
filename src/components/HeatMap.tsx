@@ -14,6 +14,7 @@ export default function HeatMapView({ value }: { value: { date: string; count: n
   return (
     <div>
       <HeatMap
+        className='pt-6'
         value={formattedValue}
         startDate={startDate}
         endDate={new Date(`${currentYear}-12-31`)}

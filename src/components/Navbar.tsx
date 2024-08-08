@@ -9,7 +9,6 @@ export default function Navbar() {
             <Link href="/">All about tesla</Link>
             
         </h1>
-        <h1 className="text-2xl">Help?</h1>
         <HeatMapButton />
     </nav>
 </header>
