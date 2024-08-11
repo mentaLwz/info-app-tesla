@@ -6,17 +6,26 @@ import HeatMapOverlay from './HeatMapOverlay';
 const HeatMapButton: React.FC = () => {
   const [showHeatMap, setShowHeatMap] = useState(false);
   const [heatMapData, setHeatMapData] = useState<any[]>([]);
+  const [stockData, setStockData] = useState<any[]>([]);
 
   useEffect(() => {
-    // Fetch heat map data when component mounts
     const fetchData = async () => {
       try {
-        const response = await fetch('/api/heatmap');
-        if (!response.ok) throw new Error('Failed to fetch heat map data');
-        const data = await response.json();
-        setHeatMapData(data);
+        const [heatmapResponse, stockResponse] = await Promise.all([
+          fetch('/api/heatmap'),
+          fetch('/api/stock?year=2024')
+        ]);
+        
+        if (!heatmapResponse.ok || !stockResponse.ok) 
+          throw new Error('Failed to fetch data');
+
+        const heatmapData = await heatmapResponse.json();
+        const stockData = await stockResponse.json();
+
+        setHeatMapData(heatmapData);
+        setStockData(stockData);
       } catch (error) {
-        console.error("Error fetching heat map data:", error);
+        console.error("Error fetching data:", error);
       }
     };
 
@@ -27,13 +36,15 @@ const HeatMapButton: React.FC = () => {
     <>
       <button
         onClick={() => setShowHeatMap(true)}
-        className="px-4 py-2 bg-lime-400 text-white rounded"
+        className="px-4 py-2 text-white rounded"
+        style={{ backgroundColor: '#FF6B6B' }}
       >
         HeatMap
       </button>
       {showHeatMap && (
         <HeatMapOverlay 
-          data={heatMapData} 
+          heatMapData={heatMapData}
+          stockData={stockData}
           onClose={() => setShowHeatMap(false)} 
         />
       )}

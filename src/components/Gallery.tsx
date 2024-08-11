@@ -41,6 +41,9 @@ async function GalleryContent({ page }: Props) {
 export default function Gallery({ page }: Props) {
   return (
     <Suspense fallback={<div>Loading...</div>}>
+      <div className="recent-news-label font-mono">
+        Most recent news about Tesla:
+      </div>
       <GalleryContent page={page} />
     </Suspense>
   );

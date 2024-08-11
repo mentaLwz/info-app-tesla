@@ -48,13 +48,13 @@ export default function NewsContainer({
     <div 
       ref={contentRef}
       className={`shadow-lg rounded-xl relative overflow-hidden mx-2 p-3 font-mono font-bold
-        transition-all duration-300 ease-in-out`}
+        transition-all duration-300 ease-in-out `}
       style={{
         background: gradientColor,
         height: isHovered ? expandedHeight : '8rem',
         transform: isHovered ? 'scale(1.05)' : 'scale(1)',
         zIndex: isHovered ? 10 : 'auto',
-        border: isHovered ? '2px solid rgba(0, 0, 0, 0.3)' : '2px solid transparent',
+        border: isHovered ? '2px solid rgba(0, 0, 0, 0.3)' : '2px solid rgba(0, 0, 0, 0.03)',
         boxShadow: isHovered ? '0 0 15px rgba(0, 0, 0, 0.2)' : 'none',
       }}
       onMouseEnter={() => setIsHovered(true)}
