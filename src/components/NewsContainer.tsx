@@ -15,14 +15,23 @@ export default function NewsContainer({
   const contentRef = useRef<HTMLDivElement>(null);
   const [expandedHeight, setExpandedHeight] = useState('9rem');
 
+  const colorMap = {
+    "1": "#eafaf1",
+    "2": "#d5f5e3",
+    "3": "#abebc6",
+    "4": "#82e0aa",
+    "5": "#58d68d",
+    "-1": "#fef5e7",
+    "-2": "#fdebd0",
+    "-3": "#fad7a0",
+    "-4": "#f8c471",
+    "-5": "#f5b041"
+  };
+
   const getGradientColor = (score: number) => {
-    const minScore = -5;
-    const maxScore = 5;
-    const normalizedScore = (score - minScore) / (maxScore - minScore);
-    const hue = 130;
-    const saturation = Math.round(100 * normalizedScore);
-    const lightness = Math.round(100 - 30 * normalizedScore);
-    return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
+    const roundedScore = Math.round(score);
+    const clampedScore = Math.max(-5, Math.min(5, roundedScore));
+    return colorMap[clampedScore.toString() as keyof typeof colorMap] || "#ffffff"; // Default to white if score is 0 or out of range
   };
 
   const options: Intl.DateTimeFormatOptions = {

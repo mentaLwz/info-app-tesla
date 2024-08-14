@@ -1,3 +1,29 @@
+# all about tesla
+
+## todo
+
+1. dynamic hover height of NewsContainer base on the length of the content
+2. add border color of NewsContainer when hover
+3. sort by date
+4. fix update bug
+
+### color mapping
+
+```json
+{
+  "1": "#eafaf1",
+  "2": "#d5f5e3",
+  "3": "#abebc6",
+  "4": "#82e0aa",
+  "5": "#58d68d",
+  "-1": "#fef5e7",
+  "-2": "#fdebd0",
+  "-3": "#fad7a0",
+  "-4": "#f8c471",
+  "-5": "#f5b041"
+}
+```
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started

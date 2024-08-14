@@ -28,13 +28,13 @@ export default function HeatMapView({ value, onDateClick }: { value: { date: str
   }));
 
   const customColors = {
-    '-15': '#053061', // Dark blue for significant decrease
-    '-10': '#2166ac',
-    '-5': '#4393c3',
+    '-15': '#f5b041', // Dark blue for significant decrease
+    '-10': '#fad7a0',
+    '-5': '#fef5e7',
     0: '#f7f7f7',    // White for no change
-    5: '#f4a582',
-    10: '#d6604d',
-    15: '#b2182b'    // Dark red for significant increase
+    5: '#eafaf1',
+    10: '#abebc6',
+    15: '#58d68d'    // Dark red for significant increase
   };
 
   const handleRectClick = useCallback((date: string) => {

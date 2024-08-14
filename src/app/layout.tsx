@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
+import BlurGradientBackground from "@/components/BlurGradientBackground";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -15,11 +16,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-      <Navbar />
+        <BlurGradientBackground colors={["#ffffff","#aaf3b6","#a2c8f1","#f6efef","#f5f9d7","#cfcfce"]} />
+        <Navbar />
         <main className="max-w-11xl p-4 ml-32 mr-20">
           {children}
         </main>
-        </body>
+      </body>
     </html>
   );
 }
