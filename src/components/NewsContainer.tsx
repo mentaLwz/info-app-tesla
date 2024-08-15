@@ -41,7 +41,7 @@ export default function NewsContainer({
     hour: '2-digit',
     minute: '2-digit',
     hour12: false,
-    timeZone: 'Asia/Shanghai'
+    timeZone: 'UTC'
   };
 
   const formattedDate = new Date(date).toLocaleString('en-US', options);
@@ -59,7 +59,7 @@ export default function NewsContainer({
       className={`shadow-lg rounded-xl relative overflow-hidden mx-2 p-3 font-mono font-bold
         transition-all duration-300 ease-in-out `}
       style={{
-        background: gradientColor,
+        background: `${gradientColor}80`,
         height: isHovered ? expandedHeight : '8rem',
         transform: isHovered ? 'scale(1.05)' : 'scale(1)',
         zIndex: isHovered ? 10 : 'auto',

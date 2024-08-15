@@ -21,9 +21,9 @@ async function GalleryContent({ page }: Props) {
   return (
     <>
       <section className="m-12 grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
-        {newsBlocksResp.items.map(block => (
+        {newsBlocksResp.items.map((block, index) => (
           <NewsContainer  
-            key={block.id.toString()}
+            key={`news-${index}-${JSON.stringify(block.id)}`}
             id={block.id}          
             title={block.title}
             link={block.link}

@@ -36,8 +36,7 @@ const HeatMapButton: React.FC = () => {
     <>
       <button
         onClick={() => setShowHeatMap(true)}
-        className="px-4 py-2 text-white rounded"
-        style={{ backgroundColor: '#40E0D0' }}
+        className="px-4 py-2 text-white font-mono rounded bg-green-400"
       >
         HeatMap
       </button>

@@ -34,11 +34,18 @@ export async function fetchHeatMapData(): Promise<{ date: string; count: number 
       }
     ]);
 
-    // Format the data for HeatMapView
-    return heatMapData.map(item => ({
-      date: item.date,
-      count: item.count
-    }));
+    // Get the current date
+    const currentDate = new Date();
+    // Calculate the date one year ago
+    const oneYearAgo = new Date(currentDate.getFullYear() - 1, currentDate.getMonth(), currentDate.getDate());
+
+    // Filter and map the data
+    return heatMapData
+      .filter(item => new Date(item.date) >= oneYearAgo)
+      .map(item => ({
+        date: item.date,
+        count: item.count
+      }));
 
   } catch (error) {
     console.error("Error fetching heat map data:", error);

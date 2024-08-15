@@ -21,7 +21,7 @@ export async function getData(page: number, limit: number) {
 
   // 查询数据库，按 id 倒序排序
   const items = await Tesla.find({})
-    .sort({ id: -1 }) // 按 id 倒序排序
+    .sort({ date: -1, id: -1 }) // 按 id 倒序排序
     .skip((page - 1) * limit)
     .limit(limit)
     .exec();
@@ -53,7 +53,7 @@ export async function getNewsByDate(date: string): Promise<NewsBlock[]> {
   try {
     const items = await Tesla.find({
       date: { $gte: startDate, $lt: endDate }
-    }).sort({ id: -1 }).exec();
+    }).sort({ date: -1, id: -1 }).exec();
 
     console.log(`Tesla items found for ${date}: ${items.length}`);
 
