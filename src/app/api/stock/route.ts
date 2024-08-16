@@ -12,7 +12,6 @@ export async function GET(request: Request) {
 
   try {
     const data = await fetchTeslaStock(year);
-    console.log('Stock API response:', data);
     return NextResponse.json(data);
   } catch (error) {
     console.error("Error fetching stock price data:", error);

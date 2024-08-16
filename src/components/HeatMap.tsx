@@ -26,7 +26,21 @@ const CustomTooltip = ({ content, position }: { content: React.ReactNode, positi
   </div>
 );
 
-export default function HeatMapView({ value, onDateClick }: { value: { date: string; value: number }[], onDateClick: (date: string) => void }) {
+interface HeatMapItem {
+  date: string;
+  count: number;
+  open?: number;  // Optional field
+  close?: number; // Optional field
+  // Add any other optional fields you need
+}
+
+interface HeatMapViewProps {
+  value: HeatMapItem[];
+  onDateClick: (date: string) => void;
+  handleMouseEnter: (event: React.MouseEvent<SVGRectElement>, data: any) => React.ReactNode;
+}
+
+export default function HeatMapView({ value, onDateClick, handleMouseEnter }: HeatMapViewProps) {
   const [tooltipContent, setTooltipContent] = useState<React.ReactNode | null>(null);
   const [tooltipPosition, setTooltipPosition] = useState({ x: 0, y: 0 });
   const heatmapRef = useRef<HTMLDivElement>(null);
@@ -35,15 +49,16 @@ export default function HeatMapView({ value, onDateClick }: { value: { date: str
   const startDate = new Date(`${currentYear}-01-01`);
 
   const normalizeValue = (count: number) => {
-    const min = Math.min(...value.map(v => v.value));
-    const max = Math.max(...value.map(v => v.value));
+    const min = Math.min(...value.map(v => v.count));
+    const max = Math.max(...value.map(v => v.count));
     return (count - min) / (max - min) * 30 - 15;
   };
 
   const formattedValue = value.map(item => ({
     date: item.date,
-    count: normalizeValue(item.value),
-    originalValue: item.value,
+    count: normalizeValue(item.count),
+    open: item.open ?? 0,
+    close: item.close ?? 0
   }));
 
   const customColors = {
@@ -55,19 +70,10 @@ export default function HeatMapView({ value, onDateClick }: { value: { date: str
     onDateClick(date);
   }, [onDateClick]);
 
-  const formatDate = (dateString: string) => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
-  };
-
-  const handleMouseEnter = (event: React.MouseEvent<SVGRectElement>, data: any) => {
+  const handleMouseEnterInternal = (event: React.MouseEvent<SVGRectElement>, data: any) => {
     const rect = event.currentTarget.getBoundingClientRect();
-    setTooltipContent(
-      <div>
-        <div>Date: {formatDate(data.date)}</div>
-        <div>Value: {data.originalValue.toFixed(2)}</div>
-      </div>
-    );
+    const tooltipData = handleMouseEnter(event, data);
+    setTooltipContent(tooltipData);
     setTooltipPosition({ x: rect.left + rect.width / 2, y: rect.top });
   };
 
@@ -93,7 +99,7 @@ export default function HeatMapView({ value, onDateClick }: { value: { date: str
           <rect
             {...props}
             onClick={() => handleRectClick(data.date)}
-            onMouseEnter={(e) => handleMouseEnter(e, data)}
+            onMouseEnter={(e) => handleMouseEnterInternal(e, data)}
             onMouseLeave={handleMouseLeave}
             style={{ cursor: 'pointer' }}
           />

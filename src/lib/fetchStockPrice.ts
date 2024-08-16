@@ -55,7 +55,9 @@ export default async function fetchTeslaStock(year: number): Promise<{ date: str
 
       return {
         date,
-        value: Math.max(0, Math.min(30, normalizedValue))
+        count: Math.max(0, Math.min(30, normalizedValue)),
+        open: dayData.open,
+        close: dayData.close
       };
     });
     

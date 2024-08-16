@@ -66,6 +66,24 @@ const HeatMapOverlay: React.FC<HeatMapOverlayProps> = ({ heatMapData, stockData,
     return new Date(date).toLocaleString('en-US', options);
   };
 
+  const handleActivityMouseEnter = (event: React.MouseEvent<SVGRectElement>, data: any) => {
+    return (
+      <div>
+        <div>Date: {formatDate(data.date)}</div>
+        <div>Activity Count: {data.count}</div>
+      </div>
+    );
+  };
+
+  const handleStockMouseEnter = (event: React.MouseEvent<SVGRectElement>, data: any) => {
+    return (
+      <div>
+        <div>Date: {formatDate(data.date)}</div>
+        <div>Stock price open: {data.open} close: {data.close}</div>
+      </div>
+    );
+  };
+
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
       <div className="bg-white rounded-lg w-4/5 h-4/5 max-w-4xl max-h-4xl flex flex-col overflow-hidden">
@@ -77,11 +95,11 @@ const HeatMapOverlay: React.FC<HeatMapOverlayProps> = ({ heatMapData, stockData,
           <div className="space-y-4">
             <div>
               <h3 className="text-lg font-semibold mb-2 text-green-500">Activity Heat Map</h3>
-              <HeatMapView value={heatMapData} onDateClick={handleDateClick} />
+              <HeatMapView value={heatMapData} onDateClick={handleDateClick} handleMouseEnter={handleActivityMouseEnter} />
             </div>
             <div>
               <h3 className="text-lg font-semibold mb-2 text-green-500">Stock Heat Map</h3>
-              <HeatMapView value={stockData} onDateClick={handleDateClick} />
+              <HeatMapView value={stockData} onDateClick={handleDateClick} handleMouseEnter={handleStockMouseEnter} />
             </div>
           </div>
           {isLoading && <p className="text-center mt-4">Loading news...</p>}
