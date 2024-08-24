@@ -55,33 +55,46 @@ export default function NewsContainer({
 
   return (
     <div 
-      ref={contentRef}
-      className={`shadow-lg rounded-xl relative overflow-hidden mx-2 p-3 font-mono font-bold
-        transition-all duration-300 ease-in-out `}
-      style={{
-        background: `${gradientColor}80`,
-        height: isHovered ? expandedHeight : '8rem',
-        transform: isHovered ? 'scale(1.05)' : 'scale(1)',
-        zIndex: isHovered ? 10 : 'auto',
-        border: isHovered ? '2px solid rgba(0, 0, 0, 0.3)' : '2px solid rgba(0, 0, 0, 0.03)',
-        boxShadow: isHovered ? '0 0 15px rgba(0, 0, 0, 0.2)' : 'none',
-      }}
+      className="relative mx-1 p-3 font-mono font-bold"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <p className="mb-2">{title}</p>
-      <p className={`text-sm font-thin transition-opacity duration-300 ${isHovered ? 'opacity-100' : 'opacity-0'}`}>
-        {formattedDate}
-      </p>
-      {link && (
-        <a 
-          href={link} 
-          target="_blank" 
-          rel="noopener noreferrer"
-          className={`italic font-bold text-sm text-blue-800 transition-opacity duration-300 ${isHovered ? 'opacity-100' : 'opacity-0'}`}
+      <div
+        ref={contentRef}
+        className={`mx-1 p-3 shadow-lg rounded-xl overflow-hidden transition-all duration-300 ease-in-out`}
+        style={{
+          background: `${gradientColor}80`,
+          height: '8rem',
+          border: '2px solid rgba(0, 0, 0, 0.03)',
+        }}
+      >
+        <p className="mb-2">{title}</p>
+      </div>
+      {isHovered && (
+        <div
+          className="absolute top-0 left-0 w-full h-full shadow-lg rounded-xl p-3 font-mono font-bold transition-all duration-300 ease-in-out"
+          style={{
+            background: `${gradientColor}`,
+            height: expandedHeight,
+            transform: 'scale(1.05)',
+            zIndex: 10,
+            border: '2px solid rgba(0, 0, 0, 0.3)',
+            boxShadow: '0 0 15px rgba(0, 0, 0, 0.2)',
+          }}
         >
-          Open Link in New Tab
-        </a>
+          <p className="mb-2">{title}</p>
+          <p className="text-sm font-thin">{formattedDate}</p>
+          {link && (
+            <a 
+              href={link} 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="italic font-bold text-sm text-blue-800"
+            >
+              Open Link in New Tab
+            </a>
+          )}
+        </div>
       )}
     </div>
   );

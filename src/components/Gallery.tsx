@@ -20,7 +20,7 @@ async function GalleryContent({ page }: Props) {
 
   return (
     <>
-      <section className="m-12 grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+      <section className="m-8 grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2">
         {newsBlocksResp.items.map((block, index) => (
           <NewsContainer  
             key={`news-${index}-${JSON.stringify(block.id)}`}
@@ -41,9 +41,6 @@ async function GalleryContent({ page }: Props) {
 export default function Gallery({ page }: Props) {
   return (
     <Suspense fallback={<div>Loading...</div>}>
-      <div className="recent-news-label font-mono">
-        Most recent news about Tesla:
-      </div>
       <GalleryContent page={page} />
     </Suspense>
   );
