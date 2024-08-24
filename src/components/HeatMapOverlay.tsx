@@ -5,8 +5,8 @@ import HeatMapView from './HeatMap';
 import type { NewsBlock } from "@/models/NewsBlock";
 
 interface HeatMapOverlayProps {
-  heatMapData: { date: string; value: number }[];
-  stockData: { date: string; value: number }[];
+  heatMapData: { date: string; count: number }[];
+  stockData: { date: string; count: number }[];
   onClose: () => void;
 }
 

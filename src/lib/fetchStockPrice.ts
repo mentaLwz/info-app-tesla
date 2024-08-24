@@ -19,7 +19,7 @@ const StockDataSchema = z.object({
   data: z.instanceof(Map).or(z.record(z.string(), DayDataSchema)),
 });
 
-export default async function fetchTeslaStock(year: number): Promise<{ date: string; value: number }[]> {
+export default async function fetchTeslaStock(year: number): Promise<{ date: string; count: number }[]> {
   try {
     await dbConnect();
 
