@@ -8,6 +8,7 @@ export function generateMetadata() {
 }
 
 export default function Home() {
+  console.log("lwzdebug home page")
   return (
     <Gallery page={1}></Gallery>
   );
