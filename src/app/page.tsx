@@ -7,8 +7,9 @@ export function generateMetadata() {
   }
 }
 
+export const revalidate = 0; 
 
-export default function Home() {
+export default async function Home() {
   console.log("lwzdebug home page from server")
   return (
     <Gallery page={1}></Gallery>
