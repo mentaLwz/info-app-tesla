@@ -34,6 +34,10 @@ const TeslaSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  analyse: {
+    type: String,
+    required: false,
+  },
 }, { collection: 'tesla' }); // 明确指定集合名称为 'tesla'
 
 // 选择集合

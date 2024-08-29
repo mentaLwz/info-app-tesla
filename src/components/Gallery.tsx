@@ -18,9 +18,13 @@ async function GalleryContent({ page }: Props) {
   const { limit, totalCount } = newsBlocksResp;
   const { prevPage, nextPage } = getPrevNextPages(page, limit, totalCount);
 
+
   return (
     <>
-      <section className="m-8 grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2">
+      <div className="recent-news-label font-mono text-center mb-1 mt-0">
+        Most recent news about Tesla:
+      </div>
+      <section className="grid gap-3 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
         {newsBlocksResp.items.map((block, index) => (
           <NewsContainer  
             key={`news-${index}-${JSON.stringify(block.id)}`}
@@ -30,6 +34,7 @@ async function GalleryContent({ page }: Props) {
             source={block.source}
             score={block.score}
             date={block.date}
+            analyse={block.analyse}
           />
         ))}
       </section>

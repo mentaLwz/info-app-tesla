@@ -12,6 +12,10 @@ export const revalidate = 0;
 export default async function Home() {
   console.log("lwzdebug home page from server")
   return (
-    <Gallery page={1}></Gallery>
+    <div className="flex justify-center items-center">
+      <div className="w-full max-w-max px-1">
+        <Gallery page={1} />
+      </div>
+    </div>
   );
 }

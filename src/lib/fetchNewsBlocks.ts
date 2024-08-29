@@ -69,10 +69,8 @@ export default async function fetchNewsBlockList(page: number): Promise<NewsBloc
   try {
     const res = await getData(page, 20)
     const newsBlockList: NewsBlockResp = NewsBlockRespScheme.parse(res)
-    const parseData = NewsBlockRespScheme.parse(newsBlockList)
-
-    if (parseData.items.length === 0 ) return undefined
-    return parseData
+    if (newsBlockList.items.length === 0 ) return undefined
+    return newsBlockList
   } catch (e) {
     if (e instanceof Error) console.log(e.stack)
   }

@@ -10,10 +10,12 @@ export default function NewsContainer({
   link,
   source,
   score,
+  analyse
 }: NewsBlock) {
   const [isHovered, setIsHovered] = useState(false);
   const contentRef = useRef<HTMLDivElement>(null);
-  const [expandedHeight, setExpandedHeight] = useState('9rem');
+  const hoverContentRef = useRef<HTMLDivElement>(null);
+  const [expandedHeight, setExpandedHeight] = useState('10rem');
 
   const colorMap = {
     "1": "#eafaf1",
@@ -48,23 +50,25 @@ export default function NewsContainer({
   const gradientColor = getGradientColor(score ?? 0);
 
   useEffect(() => {
-    if (contentRef.current) {
-      setExpandedHeight(`${contentRef.current.scrollHeight + 20}px`);
+    if (isHovered && hoverContentRef.current) {
+      setExpandedHeight(`${hoverContentRef.current.scrollHeight + 20}px`);
+    } else if (!isHovered && contentRef.current) {
+      setExpandedHeight('10rem');
     }
-  }, [title, formattedDate]);
+  }, [isHovered, analyse]);
 
   return (
     <div 
-      className="relative mx-1 p-3 font-mono font-bold"
+      className="relative p-4 font-mono font-bold"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
       <div
         ref={contentRef}
-        className={`mx-1 p-3 shadow-lg rounded-xl overflow-hidden transition-all duration-300 ease-in-out`}
+        className={`p-4 shadow-lg rounded-xl overflow-hidden transition-all duration-300 ease-in-out`}
         style={{
           background: `${gradientColor}80`,
-          height: '8rem',
+          height: '10rem',
           border: '2px solid rgba(0, 0, 0, 0.03)',
         }}
       >
@@ -72,13 +76,13 @@ export default function NewsContainer({
       </div>
       {isHovered && (
         <div
-          className="absolute top-0 left-0 w-full h-full shadow-lg rounded-xl p-3 font-mono font-bold transition-all duration-300 ease-in-out"
+          ref={hoverContentRef}
+          className="absolute top-4 left-4 w-full shadow-lg rounded-xl p-4 font-mono font-bold transition-all duration-200 ease-in-out"
           style={{
             background: `${gradientColor}`,
             height: expandedHeight,
-            transform: 'scale(1.05)',
             zIndex: 10,
-            border: '2px solid rgba(0, 0, 0, 0.3)',
+            border: '2px solid rgba(0, 0, 0, 0.5)',
             boxShadow: '0 0 15px rgba(0, 0, 0, 0.2)',
           }}
         >
@@ -93,6 +97,14 @@ export default function NewsContainer({
             >
               Open Link in New Tab
             </a>
+          )}
+          {analyse && (
+            <div className="mt-2">
+              <strong>Analyse:</strong>
+              <p
+              className="italic font-bold text-sm text-blue-800"
+              >{analyse}</p>
+            </div>
           )}
         </div>
       )}

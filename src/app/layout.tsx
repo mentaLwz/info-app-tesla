@@ -15,11 +15,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>
+      <body className="bg-gradient-to-r from-green-200 via-blue-200 to-purple-200">
         <BlurGradientBackground colors={["#ffffff","#aaf3b6","#a2c8f1","#f6efef","#f5f9d7","#cfcfce"]} />
         <Navbar />
-        <main className="max-w-11xl p-4 ml-32 mr-20">
-          {children}
+        <main className="flex justify-center items-center min-h-full pt-16 pb-0">
+          <div className="w-full max-w-max px-24 pb-10">
+            {children}
+          </div>
         </main>
       </body>
     </html>
