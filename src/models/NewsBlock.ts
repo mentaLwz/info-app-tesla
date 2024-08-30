@@ -3,7 +3,7 @@ import { z } from 'zod';
 
 // Zod schemas for validation
 const longValidator = z.union([
-  z.string(),
+  z.number(),
   z.object({
     low: z.number(),
     high: z.number(),

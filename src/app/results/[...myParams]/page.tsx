@@ -5,7 +5,7 @@ type Props = {
         myParams: (string | undefined)[]
     }
 }
-export const runtime = 'edge';
+
 
 export function generateMetadata({ params: { myParams } }: Props) {
 

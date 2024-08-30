@@ -1,9 +1,10 @@
-import { dbConnect } from './db';
+import { dbConnect } from '@/lib/db';
 import Tesla from '@/models/Item'; // Assuming you have a Tesla model defined
 
 export async function fetchHeatMapData(): Promise<{ date: string; count: number }[]> {
   try {
     // Connect to the database
+    console.log("hello from fetchHeatMapData")
     await dbConnect();
 
     // Aggregate data from MongoDB
@@ -48,7 +49,7 @@ export async function fetchHeatMapData(): Promise<{ date: string; count: number 
       }));
 
   } catch (error) {
-    console.error("Error fetching heat map data:", error);
+    console.error("Error fetching heat map data ---:", error);
     throw new Error("Failed to fetch heat map data");
   }
 }

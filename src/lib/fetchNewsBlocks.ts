@@ -1,6 +1,6 @@
 import type { NewsBlock, NewsBlockResp } from "@/models/NewsBlock";
 import { NewsBlockRespScheme } from "@/models/NewsBlock";
-import env from "./env";
+
 
 
 import { dbConnect } from '@/lib/db';

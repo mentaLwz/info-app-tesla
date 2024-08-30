@@ -2,8 +2,6 @@ import { NextResponse } from 'next/server';
 import { dbConnect } from '@/lib/db';
 import Tesla from '@/models/Item';
 
-export const runtime = 'edge';
-
 export async function GET(request: Request) {
 
   // 解析查询参数
