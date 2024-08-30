@@ -1,5 +1,6 @@
 
 import Gallery from "@/components/Gallery";
+export const runtime = 'edge';
 
 export function generateMetadata() {
   return {
