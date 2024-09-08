@@ -1,16 +1,45 @@
+'use client';
 import { Suspense } from 'react';
 import NewsContainer from './NewsContainer';
 import Footer from './Footer';
-import fetchNewsBlockList from '@/lib/fetchNewsBlocks';
 import getPrevNextPages from '@/lib/getPrevNextPages';
+import type { NewsBlockResp } from "@/models/NewsBlock";
+import { useState, useEffect } from 'react';
+
 
 type Props = {
   page: number
 }
 
+
+
 async function GalleryContent({ page }: Props) {
-  const newsBlocksResp = await fetchNewsBlockList(page);
+  const [newsBlocksResp, setNewsBlocksResp] = useState<NewsBlockResp | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchNewsBlockList() {
+      try {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/news?page=${page}&limit=20`);
+        if (!response.ok) {
+          throw new Error('获取新闻失败');
+        }
+        const data = await response.json();
+        setNewsBlocksResp(data);
+      } catch (error) {
+        console.error('获取新闻时出错:', error);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchNewsBlockList();
+  }, [page]);
   
+  if (loading) {
+    return <div>加载中...</div>;
+  }
+
   if (!newsBlocksResp || newsBlocksResp.items.length === 0) {
     return <h2 className="m-4 text-2xl font-bold">No news Found</h2>;
   }

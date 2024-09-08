@@ -1,7 +1,4 @@
 import { z } from 'zod';
-import env from './env';
-
-const API_BASE_URL = env.API_BASE_URL;
 
 // Define Zod schemas
 const StockDataSchema = z.array(z.object({
@@ -13,7 +10,7 @@ const StockDataSchema = z.array(z.object({
 
 export default async function fetchTeslaStock(year: number): Promise<z.infer<typeof StockDataSchema>> {
   try {
-    const response = await fetch(`${API_BASE_URL}/stock?year=${year}`);
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/stock?year=${year}`);
     if (!response.ok) {
       throw new Error(`Failed to fetch stock data for year ${year}`);
     }

@@ -3,7 +3,6 @@
 import React, { useState, useCallback, useMemo } from 'react';
 import HeatMapView from './HeatMap';
 import type { NewsBlock } from "@/models/NewsBlock";
-import { publicEnv } from '@/lib/env';
 
 interface HeatMapOverlayProps {
   heatMapData: { date: string; count: number }[];
@@ -22,7 +21,7 @@ const HeatMapOverlay: React.FC<HeatMapOverlayProps> = ({ heatMapData, stockData,
     setSelectedDate(date);
     try {
       const formattedDate = new Date(date).toISOString().split('T')[0];
-      const response = await fetch(`${publicEnv.API_BASE_URL}/news?date=${formattedDate}`);
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/news?date=${formattedDate}`);
       if (!response.ok) throw new Error('Failed to fetch news');
       const news = await response.json();
       setSelectedNews(news);

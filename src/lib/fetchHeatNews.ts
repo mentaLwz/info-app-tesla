@@ -1,4 +1,4 @@
-import env from './env';
+
 
 interface HeatMapItem {
   date: string;
@@ -8,7 +8,7 @@ interface HeatMapItem {
 export async function fetchHeatMapData(): Promise<HeatMapItem[]> {
   try {
     console.log("Fetching heat map data from API");
-    const response = await fetch(`${env.API_BASE_URL}/heatmap`);
+    const response = await fetch(`${process.env.API_BASE_URL}/heatmap`);
 
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);

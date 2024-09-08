@@ -1,15 +1,25 @@
 import type { NewsBlock, NewsBlockResp } from "@/models/NewsBlock";
 import { NewsBlockRespScheme } from "@/models/NewsBlock";
-import env from './env';
 
-const API_BASE_URL = env.API_BASE_URL;
+
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 export async function getData(page: number, limit: number): Promise<NewsBlockResp> {
-  const response = await fetch(`${API_BASE_URL}/news?page=${page}&limit=${limit}`);
-  if (!response.ok) {
-    throw new Error('Failed to fetch news data');
+  const url = `${API_BASE_URL}/news?page=${page}&limit=${limit}`;
+  console.log("Fetching URL:", url);
+  
+  try {
+    const response = await fetch(url);
+    if (!response.ok) {
+      console.error("API response not OK:", response.status, response.statusText);
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    return await response.json();
+  } catch (error) {
+    console.error("Fetch error:", error);
+    console.error("Error details:", JSON.stringify(error, Object.getOwnPropertyNames(error)));
+    throw error;
   }
-  return await response.json();
 }
 
 export async function getNewsByDate(date: string): Promise<NewsBlock[]> {
