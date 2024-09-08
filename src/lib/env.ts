@@ -1,9 +1,6 @@
 import { cleanEnv, str } from "envalid";
 
 const serverEnv = cleanEnv(process.env, {
-  API_HOST: str(),
-  API_KEY: str(),
-  MONGO_URL: str(),
   API_BASE_URL: str(),
 })
 
