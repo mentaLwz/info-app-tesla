@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import HeatMapOverlay from './HeatMapOverlay';
+import { publicEnv } from '@/lib/env';
 
 const HeatMapButton: React.FC = () => {
   const [showHeatMap, setShowHeatMap] = useState(false);
@@ -12,8 +13,8 @@ const HeatMapButton: React.FC = () => {
     const fetchData = async () => {
       try {
         const [heatmapResponse, stockResponse] = await Promise.all([
-          fetch('/api/heatmap'),
-          fetch('/api/stock?year=2024')
+          fetch(`${publicEnv.API_BASE_URL}/heatmap`),
+          fetch(`${publicEnv.API_BASE_URL}/stock?year=2024`)
         ]);
         
         if (!heatmapResponse.ok || !stockResponse.ok) 

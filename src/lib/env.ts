@@ -1,9 +1,14 @@
 import { cleanEnv, str } from "envalid";
 
-const env = cleanEnv(process.env, {
+const serverEnv = cleanEnv(process.env, {
   API_HOST: str(),
   API_KEY: str(),
   MONGO_URL: str(),
+  API_BASE_URL: str(),
 })
 
-export default env
+export const publicEnv = {
+  API_BASE_URL: process.env.NEXT_PUBLIC_API_BASE_URL || serverEnv.API_BASE_URL,
+};
+
+export default serverEnv

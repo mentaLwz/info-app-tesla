@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import fetchTeslaStock from '@/lib/fetchStockPrice';
-
+export const runtime = "edge";
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const year = parseInt(searchParams.get('year') || '2024', 10);

@@ -1,55 +1,29 @@
-import { dbConnect } from '@/lib/db';
-import Tesla from '@/models/Item'; // Assuming you have a Tesla model defined
+import env from './env';
 
-export async function fetchHeatMapData(): Promise<{ date: string; count: number }[]> {
+interface HeatMapItem {
+  date: string;
+  count: number;
+}
+
+export async function fetchHeatMapData(): Promise<HeatMapItem[]> {
   try {
-    // Connect to the database
-    console.log("hello from fetchHeatMapData")
-    await dbConnect();
+    console.log("Fetching heat map data from API");
+    const response = await fetch(`${env.API_BASE_URL}/heatmap`);
 
-    // Aggregate data from MongoDB
-    const heatMapData = await Tesla.aggregate([
-      {
-        $group: {
-          _id: { $dateToString: { format: "%Y-%m-%d", date: "$date" } },
-          count: {
-            $sum: {
-              $cond: [
-                { $regexMatch: { input: "$score", regex: /^\d+(\.\d+)?$/ } },
-                { $toDouble: "$score" },
-                0
-              ]
-            }
-          }
-        }
-      },
-      {
-        $project: {
-          _id: 0,
-          date: "$_id",
-          count: 1
-        }
-      },
-      {
-        $sort: { date: 1 }
-      }
-    ]);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
 
-    // Get the current date
-    const currentDate = new Date();
-    // Calculate the date one year ago
-    const oneYearAgo = new Date(currentDate.getFullYear() - 1, currentDate.getMonth(), currentDate.getDate());
+    const data = await response.json();
 
-    // Filter and map the data
-    return heatMapData
-      .filter(item => new Date(item.date) >= oneYearAgo)
-      .map(item => ({
-        date: item.date,
-        count: item.count
-      }));
+    // 假设 API 返回的数据已经是正确的格式
+    // 如果需要,您可以在这里添加额外的数据处理逻辑
+
+    console.log(`Fetched ${data.length} heat map items`);
+    return data;
 
   } catch (error) {
-    console.error("Error fetching heat map data ---:", error);
+    console.error("Error fetching heat map data:", error);
     throw new Error("Failed to fetch heat map data");
   }
 }

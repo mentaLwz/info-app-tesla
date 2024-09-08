@@ -1,5 +1,5 @@
 import Gallery from "@/components/Gallery";
-
+export const runtime = "edge";
 export function generateMetadata() {
   return {
     title: `Results for tesla - Page 1`
