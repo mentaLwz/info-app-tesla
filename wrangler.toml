@@ -1,4 +1,8 @@
-name = "my-app"
+name = "info-app-tesla"
 compatibility_date = "2024-07-29"
 compatibility_flags = ["nodejs_compat"]
+
 pages_build_output_dir = ".vercel/output/static"
+
+[vars]
+API_BASE_URL = "https://info-app-api.xiaozhenspeaking.workers.dev/api"
