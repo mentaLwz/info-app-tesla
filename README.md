@@ -1,6 +1,6 @@
 # all about tesla
 
-## todo
+## todo 
 
 1. dynamic hover height of NewsContainer base on the length of the content
 2. add border color of NewsContainer when hover
