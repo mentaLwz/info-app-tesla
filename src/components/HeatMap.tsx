@@ -3,11 +3,9 @@
 import React, { useState, useCallback, useRef } from 'react';
 import HeatMap from '@uiw/react-heat-map';
 
-import type { NewsBlock } from "@/models/NewsBlock";
-
 // Custom Tooltip component
 const CustomTooltip = ({ content, position }: { content: React.ReactNode, position: { x: number, y: number } }) => (
-  <div 
+  <div
     style={{
       position: 'fixed',
       left: `${position.x}px`,

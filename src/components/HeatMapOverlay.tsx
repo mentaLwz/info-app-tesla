@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useCallback, useMemo } from 'react';
+import React, { useState, useCallback, useMemo, useEffect } from 'react';
 import HeatMapView from './HeatMap';
 import type { NewsBlock } from "@/models/NewsBlock";
 
@@ -10,27 +10,44 @@ interface HeatMapOverlayProps {
   onClose: () => void;
 }
 
+const fetchWithCache = async (url: string, cacheKey: string) => {
+  const cachedData = localStorage.getItem(cacheKey);
+  if (cachedData) {
+    const { data, timestamp } = JSON.parse(cachedData);
+    if (new Date().getTime() - timestamp < 60 * 60 * 1000) { // 1小时缓存
+      return data;
+    }
+  }
+
+  const response = await fetch(url);
+  if (!response.ok) throw new Error('获取新闻失败');
+  const data = await response.json();
+  localStorage.setItem(cacheKey, JSON.stringify({ data, timestamp: new Date().getTime() }));
+  return data;
+};
+
 const HeatMapOverlay: React.FC<HeatMapOverlayProps> = ({ heatMapData, stockData, onClose }) => {
+  const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const [selectedNews, setSelectedNews] = useState<NewsBlock[]>([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [selectedDate, setSelectedDate] = useState<string | null>(null);
 
-
-  const handleDateClick = useCallback(async (date: string) => {
-    setIsLoading(true);
-    setSelectedDate(date);
-    try {
-      const formattedDate = new Date(date).toISOString().split('T')[0];
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/news?date=${formattedDate}`);
-      if (!response.ok) throw new Error('Failed to fetch news');
-      const news = await response.json();
-      setSelectedNews(news);
-    } catch (error) {
-      console.error('Failed to fetch news:', error);
-      setSelectedNews([]);
-    } finally {
-      setIsLoading(false);
+  useEffect(() => {
+    if (selectedDate) {
+      setIsLoading(true);
+      fetchWithCache(`${process.env.NEXT_PUBLIC_API_BASE_URL}/news?date=${selectedDate}`, `newsCache_${selectedDate}`)
+        .then(data => {
+          setSelectedNews(data);
+          setIsLoading(false);
+        })
+        .catch(error => {
+          console.error("获取新闻时出错:", error);
+          setIsLoading(false);
+        });
     }
+  }, [selectedDate]);
+
+  const handleDateClick = useCallback((date: string) => {
+    setSelectedDate(new Date(date).toISOString().split('T')[0]);
   }, []);
 
   const colorMap = {
@@ -103,14 +120,14 @@ const HeatMapOverlay: React.FC<HeatMapOverlayProps> = ({ heatMapData, stockData,
             </div>
           </div>
           {isLoading && <p className="text-center mt-4">Loading news...</p>}
-          {!isLoading && selectedNews.length > 0 && selectedDate && (
+          {!isLoading && selectedNews && selectedDate && (
             <div className="mt-8 p-6 bg-gray-100 rounded-lg shadow-md">
               <h3 className="text-xl font-bold mb-4 text-gray-800">
                 News for {new Date(selectedDate).toLocaleDateString()}:
               </h3>
               <ul className="space-y-4">
                 {selectedNews.map((news, index) => (
-                  <li 
+                  <li
                     key={`news-${index}-${JSON.stringify(news.id)}`}
                     className="p-4 rounded-md shadow-sm hover:shadow-md transition-shadow duration-200"
                     style={{ backgroundColor: getBackgroundColor(news.score ?? 0) }}
