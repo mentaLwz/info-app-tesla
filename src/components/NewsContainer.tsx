@@ -12,7 +12,7 @@ export default function NewsContainer({
   score,
   analyse
 }: NewsBlock) {
-  const [isHovered, setIsHovered] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
   const contentRef = useRef<HTMLDivElement>(null);
   const hoverContentRef = useRef<HTMLDivElement>(null);
   const [expandedHeight, setExpandedHeight] = useState('10rem');
@@ -50,18 +50,17 @@ export default function NewsContainer({
   const gradientColor = getGradientColor(score ?? 0);
 
   useEffect(() => {
-    if (isHovered && hoverContentRef.current) {
+    if (isExpanded && hoverContentRef.current) {
       setExpandedHeight(`${hoverContentRef.current.scrollHeight + 20}px`);
-    } else if (!isHovered && contentRef.current) {
+    } else if (!isExpanded && contentRef.current) {
       setExpandedHeight('10rem');
     }
-  }, [isHovered, analyse]);
+  }, [isExpanded, analyse]);
 
   return (
-    <div 
+    <div
       className="relative p-4 font-mono font-bold"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
+      onClick={() => setIsExpanded(!isExpanded)}
     >
       <div
         ref={contentRef}
@@ -74,12 +73,12 @@ export default function NewsContainer({
       >
         <p className="mb-2">{title}</p>
       </div>
-      {isHovered && (
+      {isExpanded && (
         <div
           ref={hoverContentRef}
           className="absolute top-4 left-4 w-full shadow-lg rounded-xl p-4 font-mono font-bold transition-all duration-200 ease-in-out"
           style={{
-            background: `${gradientColor}`,
+            background: `white`,
             height: expandedHeight,
             zIndex: 10,
             border: '2px solid rgba(0, 0, 0, 0.5)',
@@ -89,9 +88,9 @@ export default function NewsContainer({
           <p className="mb-2">{title}</p>
           <p className="text-sm font-thin">{formattedDate}</p>
           {link && (
-            <a 
-              href={link} 
-              target="_blank" 
+            <a
+              href={link}
+              target="_blank"
               rel="noopener noreferrer"
               className="italic font-bold text-sm text-blue-800"
             >
@@ -102,7 +101,7 @@ export default function NewsContainer({
             <div className="mt-2">
               <strong>Analyse:</strong>
               <p
-              className="italic font-bold text-sm text-blue-800"
+                className="italic font-bold text-sm text-blue-800"
               >{analyse}</p>
             </div>
           )}
